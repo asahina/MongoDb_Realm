@@ -22,7 +22,7 @@ class AppContext : Application(){
         //init MongoDb-Realm
         Realm.init(this)
         //connect to our realm app
-        app = App(AppConfiguration.Builder(Const.REALM_APP_ID)
+        app = App(AppConfiguration.Builder(BuildConfig.REALM_APP_ID)
                 .build())
         //anonymous auth
         if(!MyDatabase.isUserSignedIn()){

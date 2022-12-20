@@ -5,6 +5,13 @@ plugins {
     id 'realm-android'
 }
 
+Properties realm_prop = new Properties()
+if (rootProject.file("realm.properties").exists()) {
+    realm_prop.load(new FileInputStream(rootProject.file("realm.properties")))
+} else {
+    realm_prop.load(new FileInputStream(rootProject.file("realm.properties.sample")))
+}
+
 android {
     compileSdkVersion 33
 
@@ -14,6 +21,8 @@ android {
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
+
+        buildConfigField "String", "REALM_APP_ID", realm_prop.app_id
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
