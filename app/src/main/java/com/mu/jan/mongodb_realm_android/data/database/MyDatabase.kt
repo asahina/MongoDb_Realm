@@ -10,6 +10,7 @@ import io.realm.RealmResults
 import io.realm.kotlin.where
 import io.realm.mongodb.Credentials
 import io.realm.mongodb.User
+import io.realm.mongodb.sync.Subscription
 import io.realm.mongodb.sync.SyncConfiguration
 
 object MyDatabase {
@@ -18,10 +19,25 @@ object MyDatabase {
     private lateinit var realm : Realm
 
     fun initRealm(){
-        val partitionValue = "Project 0" //REPLACE
         val user = AppContext.get().realmApp().currentUser()
-        val config = SyncConfiguration.Builder(user,partitionValue)
+        val config = if (true) {
+            SyncConfiguration.Builder(user)
+                .initialSubscriptions { realm, subscriptions ->
+                    subscriptions.removeAll()
+                    subscriptions.add(
+                        Subscription.create(
+                            "all Tasks",
+                            realm.where(Task::class.java)
+                        ),
+                    )
+                }
                 .build()
+        } else {
+            val partitionValue = "Project 0" //REPLACE
+            SyncConfiguration.Builder(user, partitionValue)
+                .build()
+        }
+
         realm = Realm.getInstance(config)
         Logger.log("init Realm")
 

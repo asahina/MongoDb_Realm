@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     //operations
     private fun insert(){
-        MyDatabase.insert(Task("New Task","Project 0"))
+        MyDatabase.insert(Task("New Task"))
     }
     private fun readAll(){
         val results : RealmResults<Task>? = MyDatabase.readAll()

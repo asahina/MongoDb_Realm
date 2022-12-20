@@ -11,7 +11,7 @@ enum class TaskStatus(val displayName: String) {
     InProgress("In Progress"),
     Complete("Complete"),
 }
-open class Task(_name: String = "Task", project: String = "Project 0") : RealmObject() {
+open class Task(_name: String = "Task") : RealmObject() {
     @PrimaryKey
     var _id: ObjectId = ObjectId()
     var name: String = _name
